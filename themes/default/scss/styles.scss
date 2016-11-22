@@ -1,0 +1,70 @@
+/**
+ * @file styles.scss
+ *
+ * Main stylesheet.
+ * */
+
+/**
+ * Import external libraries.
+ * */
+@import 'compass';
+@import 'susy';
+@import 'breakpoint';
+@import 'h5bp';
+
+/**
+ * import config.
+ * */
+@import 'config/variables-1200px',
+        'config/colours',
+        'config/mixins',
+        'config/grid-1200px',
+        'config/fonts',
+        'config/sprite',
+        'config/modifiers',
+        'config/typography';
+
+/**
+ * Import Sprite sheet.
+ * */
+// @include retina-sprite-add(spritesheet, 'sprites/*.png', 'retina_sprites/*.png');
+
+@include h5bp-normalize;
+@include h5bp-base-styles;
+@include h5bp-helpers;
+@include h5bp-media;
+
+/**
+ * Blocks.
+ * */
+
+/**
+ * Plugins.
+ * */
+
+/**
+ * Pages.
+ * */
+
+/**
+ * Element overrides.
+ * */
+html {
+    @include box-sizing(border-box);
+}
+
+*,
+*:before,
+*:after {
+  @include box-sizing(inherit);
+}
+
+/**
+ * Generic breakpoint.
+ * */
+@include breakpoint($container) {
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+}
