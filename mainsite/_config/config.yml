@@ -26,6 +26,9 @@ Page_Controller:
 ModelAdmin:
   extensions:
     - ModelAdminExtension
+DataList:
+  extensions:
+    - DataListExt
 
 SeoConfig:
     Page: true

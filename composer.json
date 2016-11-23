@@ -24,7 +24,8 @@
 		"salted-herring/image-orientation-fixer": "~1.0",
 		"salted-herring/salted-library": "~0.0.7",
 		"thisisbd/silverstripe-maintenance-mode": "1.0.5",
-		"salted-herring/salted-cropper": "~1.0.1"
+		"salted-herring/salted-cropper": "~1.0.1",
+		"ntb/silverstripe-rest-api": "~1.0"
 	},
 	"require-dev": {
     	"phpunit/phpunit": "3.7.*"

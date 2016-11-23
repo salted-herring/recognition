@@ -1,4 +1,4 @@
-<?php
+<?php use SaltedHerring\Debugger;
 
 class DataListExt extends Extension {
     public function format($map = null) {

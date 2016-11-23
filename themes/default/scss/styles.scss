@@ -68,3 +68,7 @@ html {
         height: auto;
     }
 }
+
+body.app {
+	@import 'pages/_app';
+}
