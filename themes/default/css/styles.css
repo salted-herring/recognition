@@ -1257,9 +1257,10 @@ body.app#gesture-recognition #header .gesture-record .sprite {
 }
 body.app#gesture-recognition #header .gesture-record .gesture-name {
   display: block;
-  width: 10.625rem;
+  width: 7.5rem;
   margin-right: 0.625rem;
   padding: 0 0.625rem;
+  border-radius: 0;
 }
 body.app#gesture-recognition #header .gesture-record .hood {
   height: 3.125rem;
