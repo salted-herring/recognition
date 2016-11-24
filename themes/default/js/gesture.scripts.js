@@ -1,4 +1,5 @@
 window.drawLocked   =   false;
+window.lastGesture  =   null;
 $(document).ready(function(e){
 
     var _stage        = {
@@ -67,8 +68,9 @@ $(document).ready(function(e){
         ctx.lineCap = "round";
         ctx.lineJoin = "round";
         ctx.lineWidth = 6;
-        oldX = e.pageX ? e.pageX : e.touches[0].pageX;
-        oldY = e.pageY ? e.pageY : e.touches[0].pageY;
+
+        oldX = e.pageX ? e.pageX : (e.touches && e.touches.length > 0 ? e.touches[0].pageX : oldX);
+        oldY = e.pageY ? e.pageY : (e.touches && e.touches.length > 0 ? e.touches[0].pageY : oldY);
         _points.push(new Point(oldX, oldY));
     };
 
@@ -81,8 +83,9 @@ $(document).ready(function(e){
 		}
 
 		ctx.moveTo(oldX,oldY);
-        oldX = e.pageX ? e.pageX : e.touches[0].pageX;
-        oldY = e.pageY ? e.pageY : e.touches[0].pageY;
+        oldX = e.pageX ? e.pageX : (e.touches && e.touches.length > 0 ? e.touches[0].pageX : oldX);
+        oldY = e.pageY ? e.pageY : (e.touches && e.touches.length > 0 ? e.touches[0].pageY : oldY);
+        
 		ctx.lineTo(oldX,oldY);
 		ctx.stroke();
 		_points[_points.length] = new Point(oldX,oldY);
@@ -133,7 +136,18 @@ $(document).ready(function(e){
                     //var s = '\'me guess... it\'s <strong>'+result.Name+'</strong>, likelihood: <strong>'+Math.round(result.Score*100) + "%"+'</strong>';
                     trace(result.Name + ', ' + Math.round(result.Score*100) + "%");
                     var record = new Record(result.Name, result.Score, _points);
+                    if (window.lastGesture) {
+                        window.lastGesture.dismiss();
+                    }
+                    window.lastGesture = record;
                     $('header').append(record.form);
+                    setTimeout(function()
+                        {
+                            $(record.form).removeClass('ready');
+                        },
+                        10
+                    );
+
                 }
     		} else if (_points.length == 1) {
                 //var s = 'It\'s a dot (you just simply tapped on the screen)';

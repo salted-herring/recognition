@@ -698,6 +698,27 @@ b {
   -moz-binding: url('/css/xml/ellipsis.xml#ellipsis');
 }
 
+.as-flex {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+.as-flex.justify-between {
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+}
+.as-flex.justify-around {
+  -webkit-justify-content: space-around;
+  justify-content: space-around;
+}
+.as-flex.justify-center {
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
 /**
  * @file _typography.scss
  *
@@ -1168,6 +1189,71 @@ body.app#gesture-recognition #header {
   height: 0;
   overflow: visible;
   position: fixed;
+}
+body.app#gesture-recognition #header .gesture-record {
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 0.625rem;
+  width: 100%;
+  max-width: 20rem;
+  margin: 0 auto;
+  opacity: 1;
+  -moz-transition: all 0.25s ease-in-out;
+  -o-transition: all 0.25s ease-in-out;
+  -webkit-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+  -moz-transform: translateY(0);
+  -ms-transform: translateY(0);
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+}
+body.app#gesture-recognition #header .gesture-record.ready {
+  opacity: 0;
+  -moz-transform: translateY(50px);
+  -ms-transform: translateY(50px);
+  -webkit-transform: translateY(50px);
+  transform: translateY(50px);
+}
+body.app#gesture-recognition #header .gesture-record.dismissing {
+  opacity: 0;
+  -moz-transform: translateY(-50px);
+  -ms-transform: translateY(-50px);
+  -webkit-transform: translateY(-50px);
+  transform: translateY(-50px);
+}
+body.app#gesture-recognition #header .gesture-record .sprite {
+  display: block;
+  margin-right: 0.625rem;
+}
+body.app#gesture-recognition #header .gesture-record .gesture-name {
+  display: block;
+  width: 10.625rem;
+  margin-right: 0.625rem;
+  padding: 0 0.625rem;
+}
+body.app#gesture-recognition #header .gesture-record .hood {
+  height: 3.125rem;
+}
+body.app#gesture-recognition #header .gesture-record .hood .likelihood {
+  line-height: 1;
+  text-align: center;
+  margin-bottom: 0.3125rem;
+  font-size: 1.375rem;
+}
+body.app#gesture-recognition #header .gesture-record .hood .btns .btn {
+  outline: none;
+  margin: 0 0.125rem;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  display: inline-block;
+}
+body.app#gesture-recognition #header .gesture-record .action {
+  display: block;
+}
+body.app#gesture-recognition #header .gesture-record .sprite.hide,
+body.app#gesture-recognition #header .gesture-record .gesture-name.hide,
+body.app#gesture-recognition #header .gesture-record .hood.hide,
+body.app#gesture-recognition #header .gesture-record .action.hide {
+  display: none;
 }
 body.app#gesture-recognition #main {
   z-index: 1;
