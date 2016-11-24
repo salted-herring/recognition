@@ -1,4 +1,26 @@
 &#gesture-recognition {
+    position: relative;
+
+    &:after {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        content: 'draw something. anything';
+        display: block;
+        color: #ccc;
+        opacity: 1;
+        @include transform(translate(-50%, -50%));
+        @include transition(opacity 0.25s);
+        @include transition-delay(1s);
+    }
+
+    &.drawing {
+        &:after {
+            opacity: 0;
+            @include transition-delay(0s);
+        }
+    }
+
     #header {
         width: 100%;
         top: 0;

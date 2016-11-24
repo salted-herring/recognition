@@ -82,6 +82,7 @@ $(document).ready(function(e){
         if (window.drawLocked) {
             return;
         }
+        $('body').addClass('drawing');
         _panning = null;
         _isLine = true;
         isMouseDown = true;
@@ -116,6 +117,7 @@ $(document).ready(function(e){
     };
 
     var upHandler = function(e) {
+        $('body').removeClass('drawing');
         if (window.drawLocked) {
             return;
         }

@@ -11,7 +11,7 @@
 		$getCSS
 		<% include GA %>
 	</head>
-	<body class="app" id="$URLSegment">
+	<body class="app just-loaded" id="$URLSegment">
 		<header id="header"></header>
 
 		<main id="main">
