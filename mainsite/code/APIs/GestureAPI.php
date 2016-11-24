@@ -33,7 +33,7 @@ class GestureAPI extends BaseRestController
                     $gesture->Title = $title;
                     $gesture->write();
                 }
-                
+
                 $vector = new Vector();
                 $vector->GestureID = $gesture->ID;
                 $vector->write();
@@ -63,6 +63,29 @@ class GestureAPI extends BaseRestController
         if ($id = $request->param('ID')) {
 
         } else {
+
+
+            if ($exclude = $request->getVar('exclude')) {
+                $vectors = Vector::get()->exclude('ID', $exclude);
+            } else {
+                $vectors = Vector::get();
+            }
+
+            $gestures = array();
+            foreach ($vectors as $vector) {
+                $gesture = $vector->Gesture();
+                if (empty($gestures[$gesture->Title])) {
+                    $gestures[$gesture->Title] = array(
+                        'title'     =>  $gesture->Title,
+                        'vectors'   =>  array()
+                    );
+                }
+
+                $gestures[$gesture->Title]['vectors'][] = $vector->format();
+            }
+
+            return array_values($gestures);
+
             return
                 Gesture::get()->format(array(
                     'title'     =>  'Title',

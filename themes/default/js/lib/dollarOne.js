@@ -128,6 +128,7 @@ function DollarRecognizer(library) // constructor
     library.forEach(function(gesture) {
         gesture.vectors.forEach(function(vector) {
             var points = [];
+			vector = vector.points;
             for (var i = 0; i < vector.length; i++) {
                 points.push(new Point(vector[i].x, vector[i].y));
             }

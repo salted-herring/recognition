@@ -85,12 +85,17 @@ var Record = function(title, likelihood, points)
 
     this.draw();
 
-    this.dismiss = function()
+    this.dismiss = function(keep)
     {
         window.lastGesture = null;
         this.form.addClass('dismissing');
+
         setTimeout(function() {
-            self.destruct();
+            if (!keep) {
+                self.destruct();
+            } else {
+                self.form.remove();
+            }
         }, 251);
     };
 
@@ -123,11 +128,13 @@ var Record = function(title, likelihood, points)
         {
             onstart: function()
             {
-                trace('start');
+                _r.AddGesture(input.val().trim().toLowerCase(), points);
+                self.dismiss(true);
             },
             done: function(data)
             {
-                trace(data);
+                teach(data);
+                self.destruct();
             }
         }
     );

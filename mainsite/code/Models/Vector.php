@@ -14,7 +14,10 @@ class Vector extends DataObject {
     );
 
     public function format() {
-        return $this->Points()->format();
+        return array(
+            'id'        =>  $this->ID,
+            'points'    =>  $this->Points()->format()
+        );
     }
 
     public function getDimension()

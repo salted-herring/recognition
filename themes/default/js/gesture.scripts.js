@@ -1,5 +1,7 @@
 window.drawLocked   =   false;
 window.lastGesture  =   null;
+window._io          =   new SaltedIO();
+window._r           =   null;
 $(document).ready(function(e){
 
     var _stage        = {
@@ -10,16 +12,38 @@ $(document).ready(function(e){
         oldY,
 		canvas,
 		ctx           =   _stage.context,
-		_r            =   null,
 		_points       =   [],
 		isMouseDown   =   false,
 		threshold     =   3,
         _panning        =   null;
-        _isLine         =   true;
+        _isLine         =   true,
+        excludeVectors  =   [];
 
-    $.get('/api/v/1/gestures', function(data) {
-        trace(data);
-        _r = new DollarRecognizer(data);
+
+    window.KnownPoints  =   _io.retrieve('KnownPoints') || [];
+    _r = new DollarRecognizer(window.KnownPoints);
+    window.KnownPoints.forEach(function(item) {
+        item.vectors.forEach(function(vector) {
+            excludeVectors.push(vector.id);
+        })
+    });
+
+    trace(excludeVectors);
+
+    $.get('/api/v/1/gestures', {exclude: excludeVectors},  function(data) {
+        if (typeof(data) === 'object' && data.length > 0) {
+            data.forEach(function(gesture) {
+                teach(gesture);
+                gesture.vectors.forEach(function(vector) {
+                    var points = [];
+                    vector = vector.points;
+                    for (var i = 0; i < vector.length; i++) {
+                        points.push(new Point(vector[i].x, vector[i].y));
+                    }
+                    _r.AddGesture(gesture.title, points);
+                });
+            });
+        }
     });
 
     $(window).resize(function(e){
@@ -85,7 +109,7 @@ $(document).ready(function(e){
 		ctx.moveTo(oldX,oldY);
         oldX = e.pageX ? e.pageX : (e.touches && e.touches.length > 0 ? e.touches[0].pageX : oldX);
         oldY = e.pageY ? e.pageY : (e.touches && e.touches.length > 0 ? e.touches[0].pageY : oldY);
-        
+
 		ctx.lineTo(oldX,oldY);
 		ctx.stroke();
 		_points[_points.length] = new Point(oldX,oldY);
@@ -202,4 +226,20 @@ function animateCanvas(stage) {
             window.drawLocked = false;
         }
     }, 8);
+}
+
+function teach(gesture)
+{
+    var exist = $.grep(window.KnownPoints, function(item) { return item.title == gesture.title; });
+    if (exist.length > 0) {
+        gesture.vectors.forEach(function(vector) {
+            var already = $.grep(exist[0].vectors, function(el) { return el.id == vector.id });
+            if (already.length == 0) {
+                exist[0].vectors.push(vector);
+            }
+        });
+    } else {
+        window.KnownPoints.push(gesture);
+    }
+    _io.store('KnownPoints', window.KnownPoints);
 }
