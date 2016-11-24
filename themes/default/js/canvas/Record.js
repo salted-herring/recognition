@@ -128,6 +128,7 @@ var Record = function(title, likelihood, points)
         {
             onstart: function()
             {
+                input.blur();
                 _r.AddGesture(input.val().trim().toLowerCase(), points);
                 self.dismiss(true);
             },
